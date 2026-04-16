@@ -5,4 +5,8 @@
 #ifndef SNAKE_GAME_POINT_H
 #define SNAKE_GAME_POINT_H
 
+struct point {
+    int x;
+    int y;
+};
 #endif //SNAKE_GAME_POINT_H
