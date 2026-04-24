@@ -42,8 +42,12 @@ end
 The engine operates using three distinct, decoupled threads:
 1. **Input Thread (Blocking)** : Listens for raw keyboard input via the ```ConsoleEngine```. It updates a `std::atomic<Direction>` value.
 Using `std::atomic` allows the input thread to communicate with the Game thread without overhead of a mutex.
+
+
 2. **Game Thread(Fixed Tick)** : Runs on a high-precision timer (150ms). It processes physics, collision detection, and snake growth.
 Upon completion of a tick, it generates a `GameSnapShot`.
+
+
 3. **Render Thread(Free-running)** : Runs as fast as the system allows (or a capped FPS). It does not know the `GameModel` exists; 
 it only knows the `GameSnapShot`.
 
@@ -52,7 +56,11 @@ it only knows the `GameSnapShot`.
 To avoid long-held locks that would stall the rendering, Snapshot pattern is implemented:
 
 - **The Problem**: Locking the entire ```GameModel``` during a render would cause the Game Thread to wait for the Renderer to finish drawing.
+
+
 - **The Solution**: The ```GameThread``` locks a mutex only long enough to copy the current state into a lightweight ```GameSnapshot``` struct. The RenderThread then locks the mutex only long enough to copy that snapshot to its local memory
+
+
 - **Complexity**: Lock duration is $O(1)$ relatively to the game complexity.
 
 ```mermaid
