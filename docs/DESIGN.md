@@ -53,7 +53,7 @@ To avoid long-held locks that would stall the rendering, Snapshot pattern is imp
 
 - **The Problem**: Locking the entire ```GameModel``` during a render would cause the Game Thread to wait for the Renderer to finish drawing.
 - **The Solution**: The ```GameThread``` locks a mutex only long enough to copy the current state into a lightweight ```GameSnapshot``` struct. The RenderThread then locks the mutex only long enough to copy that snapshot to its local memory
-- **Complexity**: Lock duration is O(1) relatively to the game complexity.
+- **Complexity**: Lock duration is $O(1)$ relatively to the game complexity.
 
 ```mermaid
 sequenceDiagram
@@ -85,12 +85,12 @@ participant R as Render Thread
 | `ConsoleEngine` Abstraction | Direct `std::cin` | By abstracting terminal I/O, the core game logic remains platform-agnostic. The engine could theoretically be swapped for an SDL or SFML engine without touching the `GameModel`. |
 
 
-**5. Complexity Analysis**
+**5. Data Structure & Algorithm**
 
-### Complexity
+### Complexity Analysis
 | Operation | Data Structure | Time Complexity | Space Complexity |
-| :--- | :---: | ---: | ---: |
-| Snake Move | `std::deque` | $O(1)$ | $O(1)$ |
-| Food Spawning | `Random Engine` | $O(1)$ | $O(1)$ |
-| Collision Check | `Board Grid` | $O(1)$ | $O(1)$ |
-| Game Reset | `Full Re-init` | $O(N)$ | $O(N)$ |
+| :--- | :---: |----------------:|-----------------:|
+| Snake Move | `std::deque` |          $O$(1) |           $O$(1) |
+| Food Spawning | `Random Engine` |          $O$(1) |           $O$(1) |
+| Collision Check | `Board Grid` |          $O$(1) |           $O$(1) |
+| Game Reset | `Full Re-init` |          $O$(N) |           $O$(N) |
