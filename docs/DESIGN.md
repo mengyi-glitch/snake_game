@@ -153,11 +153,11 @@ inputThread.join();    // Last: stop updating direction
 ### Complexity Analysis
 
 | Operation | Data Structure | Time Complexity | Space Complexity |
-| :--- | :---: | ---: | ---: |
-| Snake Move | `std::deque` | $O(1)$ | $O(1)$ |
-| Food Spawning | Random Engine | $O(1)$† | $O(1)$ |
-| Collision Check | Board Grid | $O(1)$ | $O(1)$ |
-| Game Reset | Full Re-init | $O(N)$ | $O(N)$ |
+| :--- | :---: |----------------:|-----------------:|
+| Snake Move | `std::deque` |          $O(1)$ |           $O(1)$ |
+| Food Spawning | Random Engine |          $O(1)$ |           $O(1)$ |
+| Collision Check | Board Grid |          $O(1)$ |          $O$(1)$ |
+| Game Reset | Full Re-init |          $O$(N) |           $O(N)$ |
 
 †See Food Spawning note below.
 
