@@ -10,7 +10,7 @@ This ensures that the rendering loop remains fluid and independent of the game's
 **2. Architectural Pattern (MVC)**
 
 The project follows the Model-View-Controller (MVC) design pattern, augmented with dedicated Engine layer for hardware abstraction
-
+```mermaid
 graph TD
 subgraph "Controller Layer"
 InputThread -->|Updates Direction| AtomicDir[std::atomic Direction]
@@ -35,6 +35,7 @@ end
         SharedState
         Types
     end
+```
 
 **3. Threading & Concurrency Model**
 
@@ -54,6 +55,7 @@ To avoid long-held locks that would stall the rendering, Snapshot pattern is imp
 - **The Solution**: The GameThread locks a mutex only long enough to copy the current state into a lightweight GameSnapshot struct. The RenderThread then locks the mutex only long enough to copy that snapshot to its local memory
 - **Complexity**: Lock duration is O(1) relatively to the game complexity.
 
+```mermaid
 sequenceDiagram
 participant G as Game Thread
 participant S as SharedState (Mutex)
@@ -69,5 +71,5 @@ participant R as Render Thread
     R->>S: Copy Snapshot to Local
     R->>S: unlock()
     R->>R: Render Local Copy
-
+```
 
